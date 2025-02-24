@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class ProfileController {
 
-	@GetMapping("/movieapp/profile")
+	/*@GetMapping("/movieapp/profile")
 	public String viewProfile(HttpSession session, Model model) {
 //		UserEntity user = (UserEntity) session.getAttribute("cu");
 //
@@ -21,7 +21,16 @@ public class ProfileController {
 //
 //        model.addAttribute("currentUser", user);
         return "profile";
-	}
+	}*/
+
+	 @GetMapping("/movieapp/profile")
+	    public String viewProfile(HttpSession session, Model model) {
+	        UserEntity user = (UserEntity) session.getAttribute("cu");
+	        if (user == null) return "redirect:/movieapp/index";
+	        model.addAttribute("currentUser", user); 
+	        return "profile";
+	    }
+
 	
 	
 }
