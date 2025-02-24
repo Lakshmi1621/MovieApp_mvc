@@ -37,4 +37,30 @@ public class LoginController {
 		}
 
 	}
+	@GetMapping("/movieapp/login")
+    public String showLoginPage() {
+        return "index"; // Renders login.jsp
+    }
+
+	@PostMapping("/movieapp/login")
+    public String  loginUser(
+        @RequestParam String email,
+        @RequestParam String password,
+        HttpSession session,
+        Model model
+    ) {
+        // Call findByEmail() on the injected instance
+        UserEntity user = userRepository.findByEmail(email);
+        // ... rest of the code
+        if (user != null && user.getPassword().equals(password)) {
+            session.setAttribute("cu", user);
+            return "redirect:/movieapp/profile";
+        } else {
+            model.addAttribute("error", "Invalid email or password");
+            return "index";
+        }
+    }
+}
+
+
 }
